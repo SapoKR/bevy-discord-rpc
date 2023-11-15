@@ -5,14 +5,16 @@ use bevy_discord_presence::{ActivityState, RPCConfig, RPCPlugin};
 fn main() {
     println!("hello world!");
     let mut app = App::new();
-    app.add_plugins(DefaultPlugins);
-    app.add_plugin(RPCPlugin {
-        config: RPCConfig {
-            app_id: 425407036495495169,
-            show_time: true,
-        },
-    });
-    app.add_system(update_presence);
+    app.add_plugins((
+        DefaultPlugins,
+        RPCPlugin {
+            config: RPCConfig {
+                app_id: 425407036495495169,
+                show_time: true,
+            },
+        }
+    ));
+    app.add_systems(Update, update_presence);
 
     app.run();
 }

@@ -63,8 +63,8 @@ impl Plugin for RPCPlugin {
         // NOTE: I am aware this is deprecated
         // For now, for the sake of backwards compatability with old Bevy versions we will keep using this
         // If Bevy removes these functions in future, this will change
-        app.add_startup_system(startup_client);
-        app.add_system(check_activity_changed);
+        app.add_systems(Startup, startup_client);
+        app.add_systems(Update, check_activity_changed);
         debug!("Added systems");
 
         app.insert_resource::<RPCConfig>(client_config);
