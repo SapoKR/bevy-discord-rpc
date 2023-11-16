@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_async_system::prelude::*;
 use bevy_discord_presence::{ActivityState, RPCConfig, RPCPlugin};
 
 fn main() {
@@ -6,6 +7,7 @@ fn main() {
     let mut app = App::new();
     app.add_plugins((
         DefaultPlugins,
+        AsyncSystemPlugin,
         RPCPlugin {
             config: RPCConfig {
                 app_id: 425407036495495169,
@@ -13,9 +15,15 @@ fn main() {
             },
         }
     ));
-    app.add_systems(Update, update_presence);
+    app.add_systems(Startup, setup);
 
     app.run();
+}
+
+fn setup(mut commands: Commands) {
+    commands.spawn_async(|schedules| async move {
+        schedules.add_system(Update, repeat::forever(update_presence)).await;
+    });
 }
 
 fn update_presence(mut state: ResMut<ActivityState>) {
