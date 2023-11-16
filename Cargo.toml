@@ -14,6 +14,7 @@ bevy = { version = ">=0.11", default-features = false }
 parking_lot = "0.12"
 quork = { version = "0.4.0", default-features = false, features = ["traits"] }
 derive_more = "0.99.17"
+bevy_async_system = "0.1.1"
 
 [dev-dependencies]
 version-sync = "0.9"
